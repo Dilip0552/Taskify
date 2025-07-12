@@ -1,0 +1,946 @@
+.mytodoRoot {
+    /* background-image: linear-gradient(to bottom, #FCFBF8, #FCFBF8); */
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* padding: 18px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition:  all 0.4s ease ;
+    /* box-shadow: 2px 2px 2px 2px grey; */
+
+}
+
+.appContainer {
+    max-width: 600px;
+    width: 100%;
+    height: 100%;
+    min-height: 650px;
+    overflow: hidden;
+
+}
+
+#root {
+    width: 100%;
+}
+.mytodoMainDiv{
+    background-color: #FCFBF8;
+    height: 100%;
+}
+.topBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 28px 20px 10px 20px;
+    transition:  all 0.4s ease;
+    background-color: #FCFBF8;
+
+}
+.mainContent{
+    background-color: transparent;
+    width:100%;
+    height: 100%;
+    padding:18px;
+    /* max-width: 600px; */
+    
+
+
+}
+
+.icoDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    color: #333333;
+    font-size: 35px;
+    font-weight: 600;
+    transition:  all 0.4s ease;
+    /* background-color: #FCFBF8; */
+
+
+}
+
+.icoDiv img {
+    width: 60px;
+    height: auto;
+    margin-right: 8px;
+}
+
+.themeBtn {
+    padding: 10px 12px 8px 12px;
+    font-size: 18px;
+    border: none;
+    color: #FF7A00;
+    font-weight: 600;
+    cursor: pointer;
+    transition:  all 0.4s ease;
+    background-color:white;
+    border-radius: 8px;
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:8px
+
+}
+
+
+.themeBtn:hover {
+    background-color: rgba(217, 217, 217, 0.1);
+}
+
+.themeBtn:active {
+    background-color: rgba(220, 220, 220, 0.15);
+}
+
+.midBar {
+    font-size: 38px;
+    color: #222222;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 15px;
+    transition:  all 0.4s ease;
+
+}
+
+.midBar button {
+    background-color: rgba(0, 115, 255, 0.9);
+    border-radius: 8px;
+    border: 1px solid #0073ff;
+    font-size: 20px;
+    padding: 12px 0;
+    margin-top: 10px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    /* margin-bottom: 10px; */
+}
+
+.midBar button:hover {
+    background-color: rgba(0, 115, 255, 0.95);
+}
+
+.midBar button:active {
+    background-color: rgba(0, 115, 255, 1);
+}
+
+.tasksBar {
+    height: 65%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    transition:  all 0.4s ease;
+
+}
+
+.filterDiv button{
+    background-color:rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(103, 103, 103, 0.5);
+    border-radius:8px;
+    padding:8px 10px 8px 10px;
+    color:rgb(30, 30, 30);
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom:10px;
+    cursor:pointer;
+    transition:  all 0.4s ease;
+
+}
+.filterDiv button:hover{
+    background-color:rgba(102, 102, 102, 0.2);
+
+}
+.filterDiv button:active{
+    background-color:rgba(102, 102, 102, 0.3);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.task {
+    width: 100%;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    transition:  all 0.4s ease;
+
+}
+
+.truncate {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* show 2 lines only */
+  -webkit-box-orient: vertical;
+}
+
+
+.taskSide {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    /* margin-left: 5px; */
+    width:86%;
+    transition:  all 0.4s ease;
+
+}
+
+.taskTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    transition:  all 0.4s ease;
+
+}
+
+.taskTop span {
+    color: #222;
+    font-weight: 600;
+    font-size: 22px;
+    transition:  all 0.4s ease;
+    width:90%
+
+}
+
+.roundCheckbox {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    margin-right: 16px;
+    transform: translateY(-16px);
+}
+
+.roundCheckbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: transparent;
+    border: 2px solid #888;
+    border-radius: 50%;
+    transition: 0.2s;
+    transition:  all 0.4s ease;
+
+}
+
+.roundCheckbox input:checked + .checkmark {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.checkmark::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 4px;
+    width: 6px;
+    height: 12px;
+    border: solid white;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+    border-radius: 2px;
+}
+
+.roundCheckbox input:checked + .checkmark::after {
+    display: block;
+}
+
+.high {
+    background-color: #ff4c4c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding:4px 6px 4px 6px ;
+    transition:  all 0.4s ease;
+
+}
+
+.medium {
+    background-color: #48aaff;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding:4px 6px 3px 6px ;
+    transition:  all 0.4s ease;
+
+}
+
+.low {
+    background-color: #8effab;
+    color: #333;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    padding:4px 6px 3px 6px ;
+    transition:  all 0.4s ease;
+
+}
+
+.taskMid {
+    color: #333;
+    font-size: 19px;
+    margin-top: 8px;
+    transition:  all 0.4s ease;
+
+}
+
+.taskBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #555;
+    margin-top: 8px;
+    transition:  all 0.4s ease;
+
+}
+
+.moreOptions{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+
+}
+.moreOptions img{
+    width:35px;
+    height:auto;
+    background-color: transparent;
+    /* background-color: rgb(255, 255, 255,0.5); */
+    backdrop-filter: blur(12px);
+    border-radius: 50%;
+    padding: 5px;
+    border:1px solid grey;
+    margin:4px;
+    cursor:pointer;
+    margin-right:6px;
+    transition:  all 0.4s ease;
+
+
+
+}
+.moreOptions img:hover{
+    background-color: rgb(255, 255, 255,0.4);
+
+}
+.moreOptions img:active{
+    background-color: rgb(255, 255, 255,0.5);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.filterPop{
+    overflow: hidden;
+    position:absolute;
+    bottom:0px;
+    right:50%;
+    transform: translateX(50%);
+    width:100%;
+    max-width: 600px;
+    height:100%;
+    /* background-color: #FFF; */
+    /* background-image: linear-gradient(to bottom, black, rgb(82, 82, 82)); */
+    background-color: #FCFBF8;
+    /* background-color:rgb(255, 255, 255,0.2); */
+    /* backdrop-filter: blur(30px); */
+    /* border-top-left-radius: 60px; */
+    /* border-top-right-radius: 60px; */
+    /* border-top: 2px solid #343434; */
+    transition: all 0.4s ease;
+    animation: animateFilter 0.3s ease-in-out;
+    /* box-shadow: 2px 2px 3px 3px rgb(214, 214, 214); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: left;
+    padding:22px 3vw 12px 3vw
+
+    /* padding-left:5vw; */
+    /* padding-right:5vw; */
+
+
+}
+.filterMain{
+    width:100%;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: left;
+    height:100%
+}
+.closeDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    cursor:pointer;
+    width:38px;
+    height:38px;
+}
+.closeDiv img{
+    width:fit-content;
+    height:fit-content;
+    opacity: 0.4;
+
+}
+.closeDiv img:hover{
+    opacity:0.5
+}
+.closeDiv img:active{
+    opacity:0.6
+}
+
+@keyframes animateFilter {
+    from{
+        bottom:-700px;
+    }
+    to{
+        bottom:0px
+    }
+    
+}
+
+
+
+.fSearch{
+    width:99%;
+    height: 48px;
+    background-color: #FFFFFF;
+    box-shadow: 2px 2px 6px #ededed;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 16px;
+}
+.fSearch input{
+    border-radius: 30px;
+    border:none;
+    width:95%;
+    height:95%;
+    font-size: 1.26em;
+    padding-left:5px
+}
+.fSearch input:focus {
+    outline:none;
+    border:none
+}
+
+.fPriority{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width:100%;
+    margin-bottom: 25px;
+
+    
+}
+
+.fPriority p,.fStatus p,.fDueDate p{
+    color:rgb(0, 0, 0);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.fpdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width:100%
+
+}
+.fplabel{
+    width:100%
+}
+.fplabel input{
+    width:0;
+    height:0
+}
+.fPriority{
+    width:100%
+}
+
+.fpldiv{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    /* box-shadow: 2px 2px 6px rgb(204, 204, 204); */
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:80%; */
+    /* width:180px; */
+    height:45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fplabel input:checked + .fpldiv{
+    background-color: #1E61E4;
+    color:white
+}
+
+.fStatus{
+    display: flex;
+    flex-direction:column;
+    align-items: left;
+    justify-content: center;
+    width:100%;
+    margin-bottom: 25px;
+}
+.fslabel{
+    width:100%
+}
+.fslabel input{
+    width: 0;
+    height: 0;
+}
+.fsdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.fsldiv{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:180px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height:45px
+}
+
+.fslabel input:checked + .fsldiv{
+    background-color: #1E61E4;
+    color:white
+
+}
+
+.fDueDate{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    width:100%;
+    margin-bottom: 25px;
+}
+.fdDiv{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    width:100%
+    
+}
+.fdDiv input{
+    width:40%;
+    height:45px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    padding:10px;
+    /* margin-top:12px; */
+    font-size: 1.2rem;
+
+}
+.fdDiv input:focus {
+    outline: none;
+    border:none
+}
+
+.fbtnOptions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    
+}
+
+.fbtnClear{
+    width:180px;
+    height:45px;
+    color:black;
+    background-color:white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    font-weight: 500;
+    font-size: 19px;
+    cursor:pointer;
+    margin:8px
+
+}
+.fbtnApply{
+    width:180px;
+    height:45px;
+    color:white;
+    background-color:#1E61E4;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 1px 1px 7px 1px #b9b9b9;
+    font-weight: 500;
+    font-size: 19px;
+    cursor:pointer;
+    margin:8px
+
+
+}
+
+
+/* Add Task */
+.atContainer{
+    background-color: transparent;
+    width:100%;
+    height:100%;
+    overflow: hidden;
+    transition:all 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.atAddTask{
+    background-color: transparent;
+    width:100%;
+    max-width: 600px;
+    height:100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    padding:30px 10px 30px 10px;
+    transition:all 0.4s ease-in-out;
+
+
+}
+.atHeader{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition:all 0.4s ease-in-out;
+
+}
+.atHeader img{
+    width:30px;
+    height:30px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    cursor:pointer;
+}
+.atHeadingSpan{
+    color:rgb(18, 18, 18);
+    font-size: 34px;
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
+}
+
+
+.atTitle{
+    width:100%;
+    height:80px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+
+}
+.atTitle .atTitleSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.atTitle input{
+    border:none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.atTitle input:focus{
+    outline: none;
+}
+
+.atDescription{
+    width:100%;
+    height:120px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+}
+
+
+.atDescription .atDescriptionSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.atDescription textarea{
+    border:none;
+    resize: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.atDescription textarea:focus{
+    outline: none;
+}
+
+
+.atDueDate{
+    width:100%;
+    height:80px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+}
+
+.atDueDate .atDueDateSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.atDueDate input{
+    border:none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+}
+
+.atDueDate input:focus{
+    outline: none;
+}
+
+
+
+.atPriority{
+    margin-top: 22px;
+    margin-bottom: 10px;
+}
+
+.atPriority p{
+    color:rgb(0, 0, 0);
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
+}
+.atdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width:100%;
+    transform: translateY(-20px);
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.atlabel{
+    width:100%
+}
+.atlabel input{
+    width:0;
+    height:0
+}
+.atPriority{
+    width:100%
+}
+
+.atldiv1{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    /* box-shadow: 2px 2px 6px rgb(204, 204, 204); */
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:80%; */
+    /* width:180px; */
+    height:45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:all 0.4s ease-in-out;
+
+}
+.atldiv2{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    /* box-shadow: 2px 2px 6px rgb(204, 204, 204); */
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:80%; */
+    /* width:180px; */
+    height:45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:all 0.4s ease-in-out;
+
+}
+.atlabel input:checked + .atldiv1{
+    background-color: #ff2d2d;
+    color:white
+}
+.atlabel input:checked + .atldiv2{
+    background-color: #3b79f4;
+    color:white
+}
+
+
+
+
+
+.atAddTaskBtn {
+    background-color: rgba(0, 115, 255, 0.9);
+    border-radius: 8px;
+    border: 1px solid #0073ff;
+    font-size: 20px;
+    padding: 12px 0;
+    margin-top: 10px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    /* margin-bottom: 10px; */
+    transition:all 0.4s ease-in-out;
+
+}
+
+.atAddTaskBtn:hover {
+    background-color: rgba(0, 115, 255, 0.95);
+}
+
+.atAddTaskBtn:active {
+    background-color: rgba(0, 115, 255, 1);
+}
