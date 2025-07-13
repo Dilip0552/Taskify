@@ -8,7 +8,7 @@ import { ThemeContext } from "./ThemeContext"
 import { useQuery } from "@tanstack/react-query"
 import { div } from "framer-motion/client"
 
-function MyToDo({ setCurrentPage }) {
+function MyToDo({ setCurrentPage,setTaskID }) {
     const navigate = useNavigate()
     const Filter = lazy(() => import("./Filter"))
 
@@ -67,12 +67,15 @@ function MyToDo({ setCurrentPage }) {
                                 tasks.map(task => (
                                     <NewTask
                                         key={task._id}
+                                        taskID={task._id}
                                         mode={theme}
                                         theme={file}
                                         title={task.title}
                                         body={task.description}
                                         date={task.due_date}
                                         priority={task.priority}
+                                        setCurrentPage={setCurrentPage}
+                                        setTaskID={setTaskID}
                                     />
                                 ))
                             )}

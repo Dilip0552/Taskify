@@ -5,21 +5,25 @@ import MyToDo from "./MyToDo";
 import AddTask from "./AddTask";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeContext } from "./ThemeContext";
-
+import EditTask from "./EditTask";
 function MyToDoMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
 
   const [currentPage, setCurrentPage] = useState("tasks");
+  const [taskID,setTaskID]=useState("")
 
   const renderPage = () => {
     let PageComponent;
     switch (currentPage) {
       case "tasks":
-        PageComponent = <MyToDo setCurrentPage={setCurrentPage} />;
+        PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID}/>;
         break;
       case "addTask":
         PageComponent = <AddTask setCurrentPage={setCurrentPage} />;
+        break;
+      case "editTask":
+        PageComponent= <EditTask taskKey={taskID} setCurrentPage={setCurrentPage}/>;
         break;
       default:
         PageComponent = <MyToDo setCurrentPage={setCurrentPage} />;

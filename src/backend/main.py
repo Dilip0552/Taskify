@@ -8,6 +8,8 @@ from passlib.context import CryptContext
 from typing import Optional
 from datetime import date
 from fastapi.encoders import jsonable_encoder
+from bson import ObjectId
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
@@ -119,3 +121,23 @@ def get_tasks(user_id: str):
         tasks.append(task)
 
     return tasks  
+
+@app.get("/api/task/{user_id}/{taskID}")
+def get_task(user_id: str, taskID: str):
+    db = client["Tasks"]
+    task_collection = db["Tasks"]
+
+    try:
+        task = task_collection.find_one({
+            "_id": ObjectId(taskID),
+            "user_id": user_id  
+        })
+    except Exception as e:
+        return {"message": f"Error occurred: {str(e)}"}
+
+    if not task:
+        return {"message": f"No task found with user_id {user_id} and taskID {taskID}"}
+
+    task["_id"] = str(task["_id"])  
+    return task
+    

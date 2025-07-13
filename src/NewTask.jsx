@@ -1,6 +1,6 @@
 
 import {useState} from 'react'
-function NewTask({theme,title,body,date,priority,mode}){
+function NewTask({taskID,theme,title,body,date,priority,mode,setCurrentPage,setTaskID}){
 
     // console.log(mode)
 
@@ -21,7 +21,9 @@ function NewTask({theme,title,body,date,priority,mode}){
             </div>
             <div className={theme.taskBottom}>
                 <div className={theme.moreOptions}>
-                    <img src={mode==="dark"?"src/assets/editing-white.png":"src/assets/editing.png"} alt="edit" />
+                    <img src={mode==="dark"?"src/assets/editing-white.png":"src/assets/editing.png"} alt="edit" onClick={()=>{
+                        setTaskID(taskID)
+                        setCurrentPage("editTask")}}/>
                     <img src="src/assets/delete.png" alt="delete" />
                 </div>
                 <span>Due <span>{date}</span></span>
