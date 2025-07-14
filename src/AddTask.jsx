@@ -69,7 +69,7 @@ const [openS,setOpenS]=useState(false)
   
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') return;
-    setOpenS(false); // 👋 Snackbar disappears
+    setOpenS(false); //
   };
 
   return (
