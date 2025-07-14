@@ -1,24 +1,31 @@
-from fastapi import FastAPI, Request, HTTPException
+from fastapi import FastAPI, Request, HTTPException, Depends
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 import pymongo
 from passlib.context import CryptContext
 from typing import Optional
-from datetime import date
+from datetime import date, datetime, timedelta
 from fastapi.encoders import jsonable_encoder
+from jose import JWTError, jwt
 from bson import ObjectId
 
+# JWT Configuration
+SECRET_KEY = "ibuildknockie"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 1440
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/token")
 
+app = FastAPI()
 
-app=FastAPI()
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
 ]
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -26,8 +33,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
-
 )
+
 app.add_middleware(
     SessionMiddleware,
     secret_key="ibuildknockie",
@@ -37,148 +44,157 @@ app.add_middleware(
 )
 
 class SignUpData(BaseModel):
-    fullName:str
-    email:str
-    password:str
+    fullName: str
+    email: str
+    password: str
 
 class LoginData(BaseModel):
-    email:str
-    password:str
+    email: str
+    password: str
 
 class Task(BaseModel):
-    title:str
-    description:Optional[str]
-    status:Optional[bool]
-    due_date:Optional[date]
-    priority:Optional[str]
-    user_id:str
+    title: str
+    description: Optional[str]
+    status: Optional[bool]
+    due_date: Optional[date]
+    priority: Optional[str]
+    user_id: str
 
 class StatusUpdate(BaseModel):
     status: bool
 
-MONGO_URL="mongodb://localhost:27017/userDatabase"
+MONGO_URL = "mongodb://localhost:27017/userDatabase"
 try:
-    global client
-    client=pymongo.MongoClient(MONGO_URL)
+    client = pymongo.MongoClient(MONGO_URL)
 except:
-    raise HTTPException(detail="Could not connnect to database server")
-
+    raise HTTPException(detail="Could not connect to database server")
 
 def hash_password(password: str):
     return pwd_context.hash(password)
 
-@app.post("/api/register")
-def registerUser(user:SignUpData):
-    try:
-        db=client["Credentials"]
-        collection=db["Passwords"]
-        existingUser=collection.find_one({"email": user.email})
-        if not existingUser:
-            user.password = hash_password(user.password)
-            collection.insert_one(user.dict())
-            return {"message":"Account Created Successfully"}
-        else:
-            return {"message":"An account with this email already exist. Please login"}
-    except Exception as e:
-        return {"message":f"An error ocurred: {e}"}
-
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
-@app.post("/api/login")
-def login(credentials:LoginData):
-    try:
-        db=client["Credentials"]
-        collection=db["Passwords"]
-        user=collection.find_one({"email": credentials.email})
-        if not user:
-            return {"message": "User not found"}
-        if verify_password(credentials.password,user["password"]):
-            return {"message": "Login successful","Status":True,"user_id":str(user["_id"])}
-        else:
-            return  {"message": "Wrong password","Status":False,"user_id":None}
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+    to_encode = data.copy()
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
 
-    except Exception as e:
-        return {"message":f"Could not try: {e}"}
+def get_current_user(token: str = Depends(oauth2_scheme)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        user_id: str = payload.get("sub")
+        if user_id is None:
+            raise credentials_exception
+        return user_id
+    except JWTError:
+        raise credentials_exception
+
+@app.post("/api/register")
+def register_user(user: SignUpData):
+    db = client["Credentials"]
+    collection = db["Passwords"]
+    existing_user = collection.find_one({"email": user.email})
+    if existing_user:
+        return {"message": "An account with this email already exists. Please login"}
+
+    user.password = hash_password(user.password)
+    collection.insert_one(user.dict())
+    return {"message": "Account Created Successfully"}
+
+@app.post("/api/token")
+def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    db = client["Credentials"]
+    collection = db["Passwords"]
+    user = collection.find_one({"email": form_data.username})
+
+    if not user:
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+
+    if not verify_password(form_data.password, user["password"]):
+        raise HTTPException(status_code=400, detail="Incorrect email or password")
+
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": str(user["_id"])}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer", "user_id": str(user["_id"])}
+
+@app.post("/api/logout")
+def logout():
+    # For simple stateless JWT, logout is handled client-side
+    return {"message": "Logged out successfully"}
 
 @app.post("/api/add-task")
-def addTask(task:Task):
-    db=client["Tasks"]
-    task_collection=db["Tasks"]
+def add_task(task: Task, user_id: str = Depends(get_current_user)):
+    db = client["Tasks"]
+    task_collection = db["Tasks"]
     task_dict = jsonable_encoder(task)
-    result=task_collection.insert_one(task_dict)
+    task_dict["user_id"] = user_id
+    result = task_collection.insert_one(task_dict)
     if not result.inserted_id:
         raise HTTPException(status_code=500, detail="Task not added")
     return {"message": "Task added successfully"}
 
-
 @app.get("/api/tasks/{user_id}")
-def get_tasks(user_id: str):
+def get_tasks(user_id: str = Depends(get_current_user)):
     db = client["Tasks"]
     task_collection = db["Tasks"]
     all_tasks = task_collection.find({"user_id": user_id})
-
     tasks = []
     for task in all_tasks:
         task["_id"] = str(task["_id"])
         tasks.append(task)
-
-    return tasks  
+    return tasks
 
 @app.get("/api/task/{user_id}/{taskID}")
-def get_task(user_id: str, taskID: str):
+def get_task(taskID: str, user_id: str = Depends(get_current_user)):
     db = client["Tasks"]
     task_collection = db["Tasks"]
-
-    try:
-        task = task_collection.find_one({
-            "_id": ObjectId(taskID),
-            "user_id": user_id  
-        })
-    except Exception as e:
-        return {"message": f"Error occurred: {str(e)}"}
-
+    task = task_collection.find_one({"_id": ObjectId(taskID), "user_id": user_id})
     if not task:
-        return {"message": f"No task found with user_id {user_id} and taskID {taskID}"}
-
-    task["_id"] = str(task["_id"])  
+        raise HTTPException(status_code=404, detail="Task not found")
+    task["_id"] = str(task["_id"])
     return task
-    
-@app.put("/api/update-task/{taskID}")
-def updateTask(task:Task,taskID:str):
+
+@app.put("/api/update-task/{user_id}/{taskID}")
+def update_task(task: Task, taskID: str, user_id: str = Depends(get_current_user)):
     db = client["Tasks"]
     task_collection = db["Tasks"]
-    try:
-        task_dict = jsonable_encoder(task)
-        result = task_collection.update_one({"_id": ObjectId(taskID)},
-        {"$set": task_dict})
-    except Exception as e:
-        return {"message": f"Error occurred: {str(e)}"}
-
+    task_dict = jsonable_encoder(task)
+    task_dict["user_id"] = user_id
+    result = task_collection.update_one({"_id": ObjectId(taskID), "user_id": user_id}, {"$set": task_dict})
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Task not found or not updated")
+    return {"message": "Task updated successfully"}
 
 @app.delete("/api/task/{taskID}")
-def delete_task(taskID:str):
+def delete_task(taskID: str, user_id: str = Depends(get_current_user)):
     db = client["Tasks"]
     task_collection = db["Tasks"]
-    result = task_collection.delete_one({"_id":ObjectId(taskID)})
-    if result.deleted_count==1:
-        return {"message":"Task Deleted Succesfully"}
+    result = task_collection.delete_one({"_id": ObjectId(taskID), "user_id": user_id})
+    if result.deleted_count == 1:
+        return {"message": "Task Deleted Successfully"}
     else:
         raise HTTPException(status_code=404, detail="Task not found")
 
-
-
-
 @app.put("/api/task/{task_id}/status")
-def update_task_status(task_id: str, update: StatusUpdate):
+def update_task_status(task_id: str, update: StatusUpdate, user_id: str = Depends(get_current_user)):
     db = client["Tasks"]
     task_collection = db["Tasks"]
-    
     result = task_collection.update_one(
-        {"_id": ObjectId(task_id)},
+        {"_id": ObjectId(task_id), "user_id": user_id},
         {"$set": {"status": update.status}}
     )
-
     if result.modified_count == 1:
         return {"message": "Task status updated successfully"}
     else:

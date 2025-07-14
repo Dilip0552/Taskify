@@ -4,43 +4,48 @@ import lightstyles from "./MyToDoLight.module.css";
 import React, { useContext, useState, useEffect } from 'react';
 import { useMutation, useQuery } from "@tanstack/react-query";
 
+import Snackbar from '@mui/material/Snackbar';
+
 function EditTask({ setCurrentPage, taskKey }) {
   const { theme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
   const user_id = localStorage.getItem('user_id');
-
+  const token = localStorage.getItem('token');
+  const [openS,setOpenS]=useState(false)
   const [taskDetails, setTaskDetails] = useState({
     title: "",
     description: "",
-    status: "pending",
+    status: false,
     due_date: "",
     priority: "",
     user_id: user_id
   });
 
-  // Fetch existing task
+  // 🔐 Fetch existing task with token
   const fetchTask = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/task/${user_id}/${taskKey}`);
+    const res = await fetch(`http://127.0.0.1:8000/api/task/${user_id}/${taskKey}`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || "Task fetch failed");
-    }
+    if (!res.ok) throw new Error(data.message || "Task fetch failed");
     return data;
   };
 
   const { data: taskData, isLoading } = useQuery({
     queryKey: ['task', taskKey],
     queryFn: fetchTask,
-    enabled: !!taskKey
+    enabled: !!taskKey && !!user_id && !!token
   });
 
-  // Pre-fill form with fetched task
+  // 📝 Pre-fill form with fetched task
   useEffect(() => {
     if (taskData) {
       setTaskDetails({
         title: taskData.title || "",
         description: taskData.description || "",
-        status: taskData.status || "pending",
+        status: taskData.status || false,
         due_date: taskData.due_date || "",
         priority: taskData.priority || "",
         user_id: taskData.user_id || user_id
@@ -52,31 +57,33 @@ function EditTask({ setCurrentPage, taskKey }) {
     setTaskDetails({ ...taskDetails, [event.target.name]: event.target.value });
   };
 
+  // 🔐 Update task with token
   const updateTask = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/update-task/${taskKey}`, {
+    const res = await fetch(`http://127.0.0.1:8000/api/update-task/${user_id}/${taskKey}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
       },
       body: JSON.stringify(taskDetails)
     });
     const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || "Task update failed");
-    }
+    if (!res.ok) throw new Error(data.message || "Task update failed");
     return data;
   };
 
   const mutation = useMutation({
     mutationFn: updateTask,
-    onSuccess: (data) => {
-      console.log(data?.message || "Task updated!");
-      setCurrentPage("tasks");
+    onSuccess: () => {
+      console.log("Task updated successfully");
+      setOpenS(true)
+      // setCurrentPage("tasks");
     }
   });
 
   const handleUpdateTask = () => {
-    if (taskDetails.title === "" || taskDetails.description === "" || taskDetails.due_date === "" || taskDetails.priority === "") {
+    const { title, description, due_date, priority } = taskDetails;
+    if (!title || !description || !due_date || !priority) {
       console.log("Please fill all the details");
     } else {
       mutation.mutate();
@@ -84,12 +91,15 @@ function EditTask({ setCurrentPage, taskKey }) {
   };
 
   if (isLoading) return <p>Loading...</p>;
-
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setOpenS(false); // 👋 Snackbar disappears
+  };
   return (
     <div className={file.etContainer}>
       <div className={file.etEditTask}>
         <div className={file.etHeader}>
-          <img src="src/assets/left-arrow.png" alt="" onClick={() => setCurrentPage("tasks")} />
+          <img src="src/assets/left-arrow.png" alt="Back" onClick={() => setCurrentPage("tasks")} />
           <span className={file.etHeadingSpan}>Edit Task</span>
         </div>
 
@@ -100,7 +110,7 @@ function EditTask({ setCurrentPage, taskKey }) {
 
         <div className={file.etDescription}>
           <span className={file.etDescriptionSpan}>Description</span>
-          <textarea type="text" placeholder="Enter a description" name="description" value={taskDetails.description} onChange={handleChange} />
+          <textarea placeholder="Enter a description" name="description" value={taskDetails.description} onChange={handleChange} />
         </div>
 
         <div className={file.etDueDate}>
@@ -122,6 +132,13 @@ function EditTask({ setCurrentPage, taskKey }) {
           </div>
         </div>
 
+        <Snackbar
+        open={openS}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message="Task updated Successfully!"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
         <button className={file.etEditTaskBtn} onClick={(e) => {
           e.preventDefault();
           handleUpdateTask();

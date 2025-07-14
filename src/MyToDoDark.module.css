@@ -304,7 +304,7 @@
     display:block
 }
 .high{
-    background-color:#AA393D;
+    background-color: #e6171e;
     color:white;
     font-weight:600;
     border:none;
@@ -313,6 +313,7 @@
     transition:  all 0.4s ease;
 
 }
+
 .medium{
     background-color:#59c2ff;
     color:white;
@@ -325,7 +326,7 @@
 
 }
 .low{
-    background-color:#53ff87;
+    background-color: #00e344;
     color:rgb(107, 107, 107);
     font-weight:600;
     border:none;
@@ -909,11 +910,11 @@
 
 }
 .atlabel input:checked + .atldiv1{
-    background-color: #ff2d2d;
+    background-color: #00e344;
     color:white
 }
 .atlabel input:checked + .atldiv2{
-    background-color: #3b79f4;
+    background-color: #e6171e;
     color:white
 }
 
@@ -1206,11 +1207,11 @@
 
 }
 .etlabel input:checked + .etldiv1{
-    background-color: #ff2d2d;
+    background-color: #00e344;
     color:white
 }
 .etlabel input:checked + .etldiv2{
-    background-color: #3b79f4;
+    background-color: #e6171e;
     color:white
 }
 
@@ -1240,3 +1241,9 @@
 .etEditTaskBtn:active {
     background-color: rgba(0, 115, 255, 1);
 }
+
+
+
+
+
+
