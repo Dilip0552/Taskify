@@ -65,8 +65,8 @@ function SignInPage({setEntryPoint}){
     }
     return (
         <div id="outer-most">
-            <div id="top-bg">
                 <div id="cp"><img src="src/assets/accountability.png" alt="logo"/></div>
+            <div id="top-bg">
             </div>
 
             <div id="bottom-bg">

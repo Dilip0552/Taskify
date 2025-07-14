@@ -315,7 +315,7 @@
     font-weight: 600;
     border: none;
     border-radius: 5px;
-    padding:4px 6px 3px 6px ;
+    padding:4px 6px 4px 6px ;
     transition:  all 0.4s ease;
 
 }
@@ -942,5 +942,297 @@
 }
 
 .atAddTaskBtn:active {
+    background-color: rgba(0, 115, 255, 1);
+}
+
+
+
+
+
+
+
+
+
+/* Edit Task */
+.etContainer{
+    background-color: transparent;
+    width:100%;
+    height:100%;
+    overflow: hidden;
+    transition:all 0.4s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+.etEditTask{
+    background-color: transparent;
+    width:100%;
+    max-width: 600px;
+    height:100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: top;
+    padding:30px 10px 30px 10px;
+    transition:all 0.4s ease-in-out;
+
+
+}
+.etHeader{
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition:all 0.4s ease-in-out;
+
+}
+.etHeader img{
+    width:30px;
+    height:30px;
+    position: absolute;
+    top:0px;
+    left:0px;
+    cursor:pointer;
+}
+.etHeadingSpan{
+    color:rgb(18, 18, 18);
+    font-size: 34px;
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
+}
+
+
+.etTitle{
+    width:100%;
+    height:80px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+
+}
+.etTitle .etTitleSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.etTitle input{
+    border:none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.etTitle input:focus{
+    outline: none;
+}
+
+.etDescription{
+    width:100%;
+    height:120px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+}
+
+
+.etDescription .etDescriptionSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.etDescription textarea{
+    border:none;
+    resize: none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.etDescription textarea:focus{
+    outline: none;
+}
+
+
+.etDueDate{
+    width:100%;
+    height:80px;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    border-radius: 8px;
+    background-color: rgba(0, 0, 0, 0.03);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(100, 100, 100, 0.2);
+    padding: 12px;
+    margin-top: 10px;
+    transition:all 0.4s ease-in-out;
+
+}
+
+.etDueDate .etDueDateSpan{
+    font-size:20px;
+    color:#858283;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    transition:all 0.4s ease-in-out;
+
+}
+.etDueDate input{
+    border:none;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    background-color: transparent;
+    font-size:20px;
+    color:#3a3a3a;
+    transition:all 0.4s ease-in-out;
+
+}
+
+.etDueDate input:focus{
+    outline: none;
+}
+
+
+
+.etPriority{
+    margin-top: 22px;
+    margin-bottom: 10px;
+}
+
+.etPriority p{
+    color:rgb(0, 0, 0);
+    font-size: 1.2rem;
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
+}
+.etdiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width:100%;
+    transform: translateY(-20px);
+    transition:all 0.4s ease-in-out;
+
+
+
+}
+.etlabel{
+    width:100%
+}
+.etlabel input{
+    width:0;
+    height:0
+}
+.etPriority{
+    width:100%
+}
+
+.etldiv1{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    /* box-shadow: 2px 2px 6px rgb(204, 204, 204); */
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:80%; */
+    /* width:180px; */
+    height:45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:all 0.4s ease-in-out;
+
+}
+.etldiv2{
+    color:rgb(0, 0, 0);
+    background-color: white;
+    /* box-shadow: 2px 2px 6px rgb(204, 204, 204); */
+    box-shadow: 1px 1px 7px 1px #d6d6d6;
+    margin:10px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 20px;
+    /* width:80%; */
+    /* width:180px; */
+    height:45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:all 0.4s ease-in-out;
+
+}
+.etlabel input:checked + .etldiv1{
+    background-color: #ff2d2d;
+    color:white
+}
+.etlabel input:checked + .etldiv2{
+    background-color: #3b79f4;
+    color:white
+}
+
+
+
+
+
+.etEditTaskBtn {
+    background-color: rgba(0, 115, 255, 0.9);
+    border-radius: 8px;
+    border: 1px solid #0073ff;
+    font-size: 20px;
+    padding: 12px 0;
+    margin-top: 10px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    /* margin-bottom: 10px; */
+    transition:all 0.4s ease-in-out;
+
+}
+
+.etEditTaskBtn:hover {
+    background-color: rgba(0, 115, 255, 0.95);
+}
+
+.etEditTaskBtn:active {
     background-color: rgba(0, 115, 255, 1);
 }

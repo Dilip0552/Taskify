@@ -48,10 +48,13 @@ class LoginData(BaseModel):
 class Task(BaseModel):
     title:str
     description:Optional[str]
-    status:Optional[str]
+    status:Optional[bool]
     due_date:Optional[date]
     priority:Optional[str]
     user_id:str
+
+class StatusUpdate(BaseModel):
+    status: bool
 
 MONGO_URL="mongodb://localhost:27017/userDatabase"
 try:
@@ -141,3 +144,42 @@ def get_task(user_id: str, taskID: str):
     task["_id"] = str(task["_id"])  
     return task
     
+@app.put("/api/update-task/{taskID}")
+def updateTask(task:Task,taskID:str):
+    db = client["Tasks"]
+    task_collection = db["Tasks"]
+    try:
+        task_dict = jsonable_encoder(task)
+        result = task_collection.update_one({"_id": ObjectId(taskID)},
+        {"$set": task_dict})
+    except Exception as e:
+        return {"message": f"Error occurred: {str(e)}"}
+
+
+@app.delete("/api/task/{taskID}")
+def delete_task(taskID:str):
+    db = client["Tasks"]
+    task_collection = db["Tasks"]
+    result = task_collection.delete_one({"_id":ObjectId(taskID)})
+    if result.deleted_count==1:
+        return {"message":"Task Deleted Succesfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Task not found")
+
+
+
+
+@app.put("/api/task/{task_id}/status")
+def update_task_status(task_id: str, update: StatusUpdate):
+    db = client["Tasks"]
+    task_collection = db["Tasks"]
+    
+    result = task_collection.update_one(
+        {"_id": ObjectId(task_id)},
+        {"$set": {"status": update.status}}
+    )
+
+    if result.modified_count == 1:
+        return {"message": "Task status updated successfully"}
+    else:
+        raise HTTPException(status_code=404, detail="Task not found or already updated")

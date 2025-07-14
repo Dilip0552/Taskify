@@ -68,9 +68,11 @@ function MyToDo({ setCurrentPage,setTaskID }) {
                                     <NewTask
                                         key={task._id}
                                         taskID={task._id}
+                                        userID={user_id}
                                         mode={theme}
                                         theme={file}
                                         title={task.title}
+                                        status={task.status}
                                         body={task.description}
                                         date={task.due_date}
                                         priority={task.priority}
