@@ -6,6 +6,7 @@ import AddTask from "./AddTask";
 import { AnimatePresence, motion } from "framer-motion";
 import { ThemeContext } from "./ThemeContext";
 import EditTask from "./EditTask";
+import ViewTask from "./ViewTask";
 import { useNavigate } from "react-router-dom";
 
 function MyToDoMain() {
@@ -14,6 +15,13 @@ function MyToDoMain() {
 
   const [currentPage, setCurrentPage] = useState("tasks");
   const [taskID, setTaskID] = useState("");
+  const [viewTaskID, setViewTaskID] = useState("");
+  const [viewTaskDetails, setViewTaskDetails]=useState({
+    title:"",
+    description:"",
+    priority:"",
+    due_date:""
+  })
   const navigate = useNavigate();
 
   // ✅ Redirect if token not present
@@ -28,13 +36,16 @@ function MyToDoMain() {
     let PageComponent;
     switch (currentPage) {
       case "tasks":
-        PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} />;
+        PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} setViewTaskDetails={setViewTaskDetails} setViewTaskID={setViewTaskID}/>;
         break;
       case "addTask":
         PageComponent = <AddTask setCurrentPage={setCurrentPage} />;
         break;
       case "editTask":
         PageComponent = <EditTask taskKey={taskID} setCurrentPage={setCurrentPage} />;
+        break;
+      case "viewTask":
+        PageComponent = <ViewTask taskID title={viewTaskDetails.title} description={viewTaskDetails.description} due_date={viewTaskDetails.due_date} priority={viewTaskDetails.priority} setCurrentPage={setCurrentPage} viewTaskID={viewTaskID}  setTaskID={setTaskID}/>;
         break;
       default:
         PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} />;

@@ -306,6 +306,8 @@
 .high{
     background-color: #e6171e;
     color:white;
+    width:fit-content;
+
     font-weight:600;
     border:none;
     border-radius: 5px;
@@ -327,6 +329,8 @@
 }
 .low{
     background-color: #00e344;
+    width:fit-content;
+
     color:rgb(107, 107, 107);
     font-weight:600;
     border:none;
@@ -1247,3 +1251,98 @@
 
 
 
+
+/* ViewTask */
+.vtMain{
+    overflow-y: auto;
+    height:85vh
+}
+.vtTop{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:space-around;
+    position: relative;
+    width:100%
+    
+}
+.vtTop img{
+    width:30px;
+    height:30px;
+    margin-right: 20px;
+    cursor:pointer;
+    filter: invert();
+
+}
+.vtTop input{
+    background-color: transparent;
+    color:#ffffff;
+    font-size: 32px;
+    font-weight: 600;
+    border:none;
+    width:100%;
+    transition:all 0.4s ease-in-out;
+
+}
+.vtTop input:focus{
+    outline: none;
+    border:none
+}
+.vtPriority{
+    margin:30px 10px 10px 0px
+}
+.vtDescription{
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+.vtDueDate{
+    margin-bottom: 20px;
+}
+.vtDescription span, .vtDueDate span{
+    color:#9669A6;
+    font-size: 22px;
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
+}
+.vtDescription p, .vtDueDate p{
+    color:#ffffff;
+    font-size: 22px;
+    margin-top:5px;
+    transition:all 0.4s ease-in-out;
+
+}
+.vtMoreOptions{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width:100%;
+    /* height:100%; */
+    margin-top: 25px;
+}
+.vtEditBtn{
+    color:white;
+    background-color: #0073ff;
+    border:none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px 1px #520574;
+    font-size: 20px;
+    width:42%;
+    height:45px;
+    max-width:250px;
+    transition:all 0.4s ease-in-out;
+
+}
+.vtDeleteBtn{
+    color:white;
+    background-color: #E44D50;
+    border:none;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px 1px #520574;
+    font-size: 20px;
+    width:42%;
+    height:45px;
+    max-width:250px;
+    transition:all 0.4s ease-in-out;
+
+}

@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
-function NewTask({ taskID, userID, theme, title, status, body, date, priority, mode, setCurrentPage, setTaskID }) {
+function NewTask({ taskID, userID, theme, title, status, body, date, priority, mode, setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID}) {
     const queryClient = useQueryClient();
     const token = localStorage.getItem("token");
 
@@ -44,16 +44,28 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
             console.error("Error updating task status:", err);
         }
     };
-
+    const handleClickDiv=(e)=>{
+        if (e.target.tagName!=="IMG" && e.target.tagName!=="INPUT" && e.target.id!=="exclude"){
+            // console.log("Clicked the div",e.target.tagName)
+            setViewTaskDetails({
+                title:title,
+                description:body,
+                priority:priority,
+                due_date:date
+            })
+            setCurrentPage("viewTask");
+            setViewTaskID(taskID)
+        }
+    }
     return (
-        <div className={theme.task}>
+        <div className={theme.task} onClick={handleClickDiv}>
             <label className={theme.roundCheckbox}>
                 <input
                     type="checkbox"
                     checked={status}
                     onChange={() => handleCheckBox(taskID, status)}
                 />
-                <span className={theme.checkmark}></span>
+                <span className={theme.checkmark} id="exclude"></span>
             </label>
             <div className={theme.taskSide}>
                 <div className={theme.taskTop}>
