@@ -34,7 +34,7 @@ function AddTask({ setCurrentPage, addTaskStatus, setAddTaskStatus }) {
 
   // 🔐 Add Task with JWT Token
   const addTask = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/add-task", {
+    const res = await fetch("https://taskify-la02.onrender.com/api/add-task", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

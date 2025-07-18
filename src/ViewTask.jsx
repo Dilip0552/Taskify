@@ -3,7 +3,7 @@ import { useContext } from "react"
 import darkstyles from "./MyToDoDark.module.css"
 import lightstyles from "./MyToDoLight.module.css"
 import { useQueryClient } from '@tanstack/react-query';
-
+import leftArrow from "./assets/left-arrow.png"
 function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID, setTaskID}){
     const {theme,setTheme}=useContext(ThemeContext)
     const file = theme === "dark" ? darkstyles : lightstyles;
@@ -13,7 +13,7 @@ function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID
 
     const deleteTask = async () => {
         try {
-            const res = await fetch(`http://127.0.0.1:8000/api/task/${viewTaskID}`, {
+            const res = await fetch(`https://taskify-la02.onrender.com/api/task/${viewTaskID}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -36,7 +36,7 @@ function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID
         <div className={file.vtContainer}>
 
         <div className={file.vtMain}>
-            <div className={file.vtTop}><img src="src/assets/left-arrow.png" alt="back" onClick={() => setCurrentPage("tasks")}/><input readOnly={theme==="light"} value={title}/></div>
+            <div className={file.vtTop}><img src={leftArrow} alt="back" onClick={() => setCurrentPage("tasks")}/><input readOnly={theme==="light"} value={title}/></div>
             <div className={`${file.vtPriority} ${priority==="Low"?file.low:file.high}`}>{priority}</div>
             <div className={file.vtDescription}>
                 <span>Description</span>

@@ -9,7 +9,7 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
 
     const deleteTask = async () => {
         try {
-            const res = await fetch(`http://127.0.0.1:8000/api/task/${taskID}`, {
+            const res = await fetch(`https://taskify-la02.onrender.com/api/task/${taskID}`, {
                 method: "DELETE",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -30,7 +30,7 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
 
     const handleCheckBox = async (taskId, currentStatus) => {
         try {
-            const res = await fetch(`http://localhost:8000/api/task/${taskId}/status`, {
+            const res = await fetch(`https://taskify-la02.onrender.com/api/task/${taskId}/status`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

@@ -23,7 +23,7 @@ function EditTask({ setCurrentPage, taskKey }) {
 
   // 🔐 Fetch existing task with token
   const fetchTask = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/task/${user_id}/${taskKey}`, {
+    const res = await fetch(`https://taskify-la02.onrender.com/api/task/${user_id}/${taskKey}`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }
@@ -59,7 +59,7 @@ function EditTask({ setCurrentPage, taskKey }) {
 
   // 🔐 Update task with token
   const updateTask = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/update-task/${user_id}/${taskKey}`, {
+    const res = await fetch(`https://taskify-la02.onrender.com/api/update-task/${user_id}/${taskKey}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

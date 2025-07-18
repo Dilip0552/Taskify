@@ -24,7 +24,7 @@ function MyToDo({ setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID }
 
   // ✅ Fetch tasks with token
   const fetchTasks = async () => {
-    const res = await fetch(`http://127.0.0.1:8000/api/tasks/${user_id}`, {
+    const res = await fetch(`https://taskify-la02.onrender.com/api/tasks/${user_id}`, {
       headers: {
         "Authorization": `Bearer ${token}`
       }

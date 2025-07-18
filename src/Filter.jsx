@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import remove from "./assets/remove.png"
 function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
   const [searchText, setSearchText] = useState("");
   const [priority, setPriority] = useState({ Low: false, High: false });
@@ -41,7 +41,7 @@ function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
   return (
     <div className={theme.filterPop}>
       <div className={theme.closeDiv}>
-        <img src="src/assets/remove.png" alt="" onClick={() => setFilterStatus("close")} />
+        <img src={remove} alt="" onClick={() => setFilterStatus("close")} />
       </div>
       <div className={theme.filterMain}>
         <h2>Filter</h2>
