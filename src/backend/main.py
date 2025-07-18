@@ -26,9 +26,10 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "https://taskify-git-main-dilip0552s-projects.vercel.app/",
-    "https://taskify-la02.onrender.com/"
+    "https://taskify-git-main-dilip0552s-projects.vercel.app",
+    "https://taskify-la02.onrender.com"
 ]
+
 
 app.add_middleware(
     CORSMiddleware,
