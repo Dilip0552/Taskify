@@ -4,7 +4,7 @@ import lightstyles from "./MyToDoLight.module.css";
 import React, { useContext, useState, useEffect } from 'react';
 import { useMutation } from "@tanstack/react-query";
 import Snackbar from '@mui/material/Snackbar';
-
+import leftArrow from "./assets/left-arrow.png"
 function AddTask({ setCurrentPage, addTaskStatus, setAddTaskStatus }) {
   const { theme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
@@ -81,7 +81,7 @@ const [openS,setOpenS]=useState(false)
     <div className={file.atContainer}>
       <div className={file.atAddTask}>
         <div className={file.atHeader}>
-          <img src="src/assets/left-arrow.png" alt="back" onClick={() => setCurrentPage("tasks")} />
+          <img src={leftArrow} alt="back" onClick={() => setCurrentPage("tasks")} />
           <span className={file.atHeadingSpan}>Add Task</span>
         </div>
 
