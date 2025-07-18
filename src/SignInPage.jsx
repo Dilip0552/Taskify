@@ -7,6 +7,7 @@ import searchGoogle from "./assets/search (2).png"
 import remove from "./assets/remove.png"
 import view from "./assets/view.png"
 import hide from "./assets/hide.png"
+import Loader from "./Loader";
 function SignInPage({ setEntryPoint }) {
     const navigate = useNavigate();
     const [popStatus, setPopStatus] = useState("close");
@@ -15,6 +16,8 @@ function SignInPage({ setEntryPoint }) {
         email: "",
         password: ""
     });
+    const [loading, setLoading] = useState(false);
+
 
     const handleChange = (event) => {
         setSIData({ ...siData, [event.target.name]: event.target.value });
@@ -48,6 +51,7 @@ function SignInPage({ setEntryPoint }) {
     const mutation = useMutation({
         mutationFn: loginUser,
         onSuccess: (data) => {
+             setLoading(false);
             if (data.access_token) {
                 localStorage.setItem("token", data.access_token);
                 localStorage.setItem("user_id", data.user_id);
@@ -58,6 +62,7 @@ function SignInPage({ setEntryPoint }) {
             }
         },
         onError: (error) => {
+             setLoading(false);
             setPopStatus("open");
             setPopupMsg(error.message || "Something went wrong");
         }
@@ -67,6 +72,7 @@ function SignInPage({ setEntryPoint }) {
         if (siData.email.trim() === "" || siData.password.trim() === "") {
             setPopStatus("open");
         } else {
+            setLoading(true);
             mutation.mutate();
         }
     };
@@ -141,6 +147,8 @@ function SignInPage({ setEntryPoint }) {
                 </div>
             </div>
             {popStatus === "open" && <PopUp message={popupMsg} popStatus={setPopStatus} />}
+            {/* {loading && <div style={{position:"absolute",top:"50%",right:"50%",transform:"translate(50%,-50%)"}}><Loader/></div>} */}
+            {loading && <div style={{width:"100vw", height:"100vh",position:"absolute",top:"0",right:"0",display:"flex",alignItems:"center",zIndex:"999",justifyContent:"center",backgroundColor:"rgba(119, 119, 119, 0.5)"}}><Loader/></div>}
         </div>
     );
 }

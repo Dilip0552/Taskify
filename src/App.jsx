@@ -13,7 +13,7 @@ function App(){
                 <Route path="/" element={<Navigate to="/login" replace/>}></Route>
                 <Route path="/login" element={<SignInPage/>}></Route>
                 <Route path="/create-account" element={<SignUpPage/>}></Route>
-                <Route path="/mytasks" element={<Suspense fallback={<div style={{display:"flex", flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"#ffffffff",height:"100vh"}}><Loader/>
+                <Route path="/mytasks" element={<Suspense fallback={<div style={{display:"flex", flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundColor:"rgba(255, 255, 255)",height:"100vh"}}><Loader/>
         </div>}><MyToDoMain/></Suspense>}></Route>
                 {/* <Route path="/filter-tasks" element={<Suspense fallback={<div style={{display:"flex", flexDirection:"column",alignItems:"center",justifyContent:"center"}}>Loading...</div>}><FilterPage/></Suspense>}></Route> */}
             </Routes>
