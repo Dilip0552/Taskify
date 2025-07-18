@@ -18,7 +18,7 @@ function SignInPage({ setEntryPoint }) {
 
     const loginUser = async () => {
   const form = new URLSearchParams();
-  form.append("username", siData.email);  // ⚠️ must be "username" not "email"
+  form.append("username", siData.email); 
   form.append("password", siData.password);
 
   const res = await fetch("http://127.0.0.1:8000/api/token", {
@@ -66,6 +66,7 @@ function SignInPage({ setEntryPoint }) {
             mutation.mutate();
         }
     };
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <div id="outer-most">
@@ -83,15 +84,34 @@ function SignInPage({ setEntryPoint }) {
                     <div>Email</div>
                     <div className="wrapper">
                         <input type="email" id="login-email" required className="m-inp" name="email" value={siData.email} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" />
+                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" onClick={()=>{
+                            setSIData({ ...siData, ["email"]: "" });
+                        }}/>
                     </div>
                 </div>
                 <div id="login-password-d" className="email-password">
                     <div>Password</div>
                     <div className="wrapper">
-                        <input type="password" id="login-password" required className="m-inp" name="password" value={siData.password} onChange={handleChange} />
-                        <img src="src/assets/hide.png" id="password-v" className="input-icon" alt="icon" />
-                    </div>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            id="login-password"
+                            required
+                            className="m-inp"
+                            name="password"
+                            value={siData.password}
+                            onChange={handleChange}
+                        />
+
+                        <img
+                            src={showPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                            id="password-v"
+                            className="input-icon"
+                            alt="icon"
+                            onClick={() => setShowPassword((prev) => !prev)}
+                            style={{ cursor: "pointer" }}
+                        />
+                        </div>
+
                 </div>
                 <div id="remember-fpass">
                     <div id="remember">

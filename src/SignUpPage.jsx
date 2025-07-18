@@ -85,15 +85,18 @@ function SignUpPage({ setEntryPoint }) {
 
         mutation.mutate();
     };
+    const [showPassword, setShowPassword] = useState(false);
+    const [showCnfPassword, setShowCnfPassword] = useState(false);
+
 
     return (
         <div id="outer-most">
-            <div id="top-bg">
                 <div id="cp"><img src="src/assets/accountability.png" alt="logo" /></div>
+            <div id="top-bg">
             </div>
 
             <div id="bottom-bg">
-                <div>Log in to your account</div>
+                <div>Sign Up to your account</div>
                 <div id="s-with-g">
                     <img src="src/assets/search (2).png" alt="google icon" />
                     <span>Sign Up with Google</span>
@@ -104,7 +107,9 @@ function SignUpPage({ setEntryPoint }) {
                     <div>Full Name</div>
                     <div className="wrapper">
                         <input type="text" id="full-name" required className="m-inp" name="fullName" value={suData.fullName} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="fname-r" className="input-icon" alt="icon" />
+                        <img src="src/assets/remove.png" id="fname-r" className="input-icon" alt="icon" onClick={()=>{
+                            setSUData({ ...suData, ["fullName"]: "" });
+                        }}/>
                     </div>
                 </div>
 
@@ -112,7 +117,9 @@ function SignUpPage({ setEntryPoint }) {
                     <div>Email</div>
                     <div className="wrapper">
                         <input type="email" id="email" required className="m-inp" name="email" value={suData.email} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" />
+                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" onClick={()=>{
+                            setSUData({ ...suData, ["email"]: "" });
+                        }}/>
                     </div>
                 </div>
 
@@ -121,20 +128,52 @@ function SignUpPage({ setEntryPoint }) {
                 </div>
 
                 <div id="password-d" className="email-password">
-                    <div>Password</div>
-                    <div className="wrapper">
-                        <input type="password" id="password" required className="m-inp" name="password" value={suData.password} onChange={handleChange} />
-                        <img src="src/assets/hide.png" id="password-v" className="input-icon" alt="icon" />
-                    </div>
+                <div>Password</div>
+                <div className="wrapper">
+                    <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    required
+                    className="m-inp"
+                    name="password"
+                    value={suData.password}
+                    onChange={handleChange}
+                    />
+                    <img
+                    src={showPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                    id="password-v"
+                    className="input-icon"
+                    alt="toggle password"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    />
+                </div>
                 </div>
 
+                {/* ✅ Confirm Password */}
                 <div id="password-d" className="email-password">
-                    <div>Confirm Password</div>
-                    <div className="wrapper">
-                        <input type="password" id="cnf-password" required className="m-inp" name="cnfPassword" value={suData.cnfPassword} onChange={handleChange} />
-                        <img src="src/assets/hide.png" id="cnf-password-v" className="input-icon" alt="icon" />
-                    </div>
+                <div>Confirm Password</div>
+                <div className="wrapper">
+                    <input
+                    type={showCnfPassword ? "text" : "password"}
+                    id="cnf-password"
+                    required
+                    className="m-inp"
+                    name="cnfPassword"
+                    value={suData.cnfPassword}
+                    onChange={handleChange}
+                    />
+                    <img
+                    src={showCnfPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                    id="cnf-password-v"
+                    className="input-icon"
+                    alt="toggle confirm password"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => setShowCnfPassword((prev) => !prev)}
+                    />
                 </div>
+                </div>
+
 
                 <div style={{ color: "yellow", fontSize: "14px", marginTop: "6px", fontWeight: 500 }}>
                     {suData.password === suData.cnfPassword ? "" : "Passwords do not match"}

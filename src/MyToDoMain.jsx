@@ -65,6 +65,13 @@ function MyToDoMain() {
       </motion.div>
     );
   };
+  const handleLogout = () => {
+  // 🧹 Clear JWT token
+  localStorage.removeItem("token"); // or sessionStorage.removeItem("token")
+    localStorage.removeItem("user_id")
+  // 🚀 Redirect to login page
+  window.location.href = "/login";
+};
 
   return (
     <div className={file.mytodoMainDiv}>
@@ -73,9 +80,13 @@ function MyToDoMain() {
           <img src="src/assets/accountability.png" alt="icon" />
           Taskify
         </div>
-        <button className={file.themeBtn} onClick={toggleTheme}>
-          {theme === "dark" ? "Light" : "Dark"} Mode
-        </button>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <button className={file.themeBtn} onClick={toggleTheme}>
+            {theme === "dark" ? "Light" : "Dark"} Mode
+          </button>
+          <img src="src/assets/logout.png" alt="logout" style={{width:"30px",height:"30px",filter:theme==="dark"?"invert()":null}} onClick={handleLogout}/>
+        </div>
+
       </div>
 
       <div className={file.mainContent}>
