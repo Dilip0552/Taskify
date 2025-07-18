@@ -8,7 +8,8 @@ import { ThemeContext } from "./ThemeContext";
 import EditTask from "./EditTask";
 import ViewTask from "./ViewTask";
 import { useNavigate } from "react-router-dom";
-import accountability from "./assets/left-arrow.png"
+import accountability from "./assets/accountability.png"
+import logout from "./assets/logout.png"
 function MyToDoMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
@@ -84,7 +85,7 @@ function MyToDoMain() {
           <button className={file.themeBtn} onClick={toggleTheme}>
             {theme === "dark" ? "Light" : "Dark"} Mode
           </button>
-          <img src="src/assets/logout.png" alt="logout" style={{width:"30px",height:"30px",filter:theme==="dark"?"invert()":null}} onClick={handleLogout}/>
+          <img src={logout} alt="logout" style={{width:"30px",height:"30px",filter:theme==="dark"?"invert()":null}} onClick={handleLogout}/>
         </div>
 
       </div>
