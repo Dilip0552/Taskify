@@ -11,10 +11,11 @@ from datetime import date, datetime, timedelta
 from fastapi.encoders import jsonable_encoder
 from jose import JWTError, jwt
 from bson import ObjectId
-
+import os
+from dotenv import load_dotenv
 # JWT Configuration
-SECRET_KEY = "ibuildknockie"
-ALGORITHM = "HS256"
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -63,7 +64,7 @@ class Task(BaseModel):
 class StatusUpdate(BaseModel):
     status: bool
 
-MONGO_URL = "mongodb://localhost:27017/userDatabase"
+MONGO_URL = os.getenv("MONGO_URI")
 try:
     client = pymongo.MongoClient(MONGO_URL)
 except:
