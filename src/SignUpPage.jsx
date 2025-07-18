@@ -2,7 +2,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import PopUp from './PopUp';
 import { useMutation } from '@tanstack/react-query';
-
+import accountability from "./assets/accountability.png"
+import searchGoogle from "./assets/search (2).png"
+import remove from "./assets/remove.png"
+import view from "./assets/view.png"
+import hide from "./assets/hide.png"
 function SignUpPage({ setEntryPoint }) {
     const navigate = useNavigate();
     const [suData, setSUData] = useState({
@@ -91,14 +95,14 @@ function SignUpPage({ setEntryPoint }) {
 
     return (
         <div id="outer-most">
-                <div id="cp"><img src="src/assets/accountability.png" alt="logo" /></div>
+                <div id="cp"><img src={accountability} alt="logo" /></div>
             <div id="top-bg">
             </div>
 
             <div id="bottom-bg">
                 <div>Sign Up to your account</div>
                 <div id="s-with-g">
-                    <img src="src/assets/search (2).png" alt="google icon" />
+                    <img src={searchGoogle} alt="google icon" />
                     <span>Sign Up with Google</span>
                 </div>
                 <div id="hr-or">or</div>
@@ -107,7 +111,7 @@ function SignUpPage({ setEntryPoint }) {
                     <div>Full Name</div>
                     <div className="wrapper">
                         <input type="text" id="full-name" required className="m-inp" name="fullName" value={suData.fullName} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="fname-r" className="input-icon" alt="icon" onClick={()=>{
+                        <img src={remove} id="fname-r" className="input-icon" alt="icon" onClick={()=>{
                             setSUData({ ...suData, ["fullName"]: "" });
                         }}/>
                     </div>
@@ -117,7 +121,7 @@ function SignUpPage({ setEntryPoint }) {
                     <div>Email</div>
                     <div className="wrapper">
                         <input type="email" id="email" required className="m-inp" name="email" value={suData.email} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" onClick={()=>{
+                        <img src={remove} id="email-r" className="input-icon" alt="icon" onClick={()=>{
                             setSUData({ ...suData, ["email"]: "" });
                         }}/>
                     </div>
@@ -140,7 +144,7 @@ function SignUpPage({ setEntryPoint }) {
                     onChange={handleChange}
                     />
                     <img
-                    src={showPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                    src={showPassword ? view :hide}
                     id="password-v"
                     className="input-icon"
                     alt="toggle password"
@@ -164,7 +168,7 @@ function SignUpPage({ setEntryPoint }) {
                     onChange={handleChange}
                     />
                     <img
-                    src={showCnfPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                    src={showCnfPassword ? view : hide}
                     id="cnf-password-v"
                     className="input-icon"
                     alt="toggle confirm password"
