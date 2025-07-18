@@ -2,10 +2,36 @@ import { ThemeContext } from "./ThemeContext"
 import { useContext } from "react"
 import darkstyles from "./MyToDoDark.module.css"
 import lightstyles from "./MyToDoLight.module.css"
-import { div } from "framer-motion/client"
+import { useQueryClient } from '@tanstack/react-query';
+
 function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID, setTaskID}){
     const {theme,setTheme}=useContext(ThemeContext)
-      const file = theme === "dark" ? darkstyles : lightstyles;
+    const file = theme === "dark" ? darkstyles : lightstyles;
+    const queryClient=useQueryClient()
+    const userID = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
+
+    const deleteTask = async () => {
+        try {
+            const res = await fetch(`http://127.0.0.1:8000/api/task/${viewTaskID}`, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert("Task deleted Successfully");
+                queryClient.invalidateQueries(["tasks", userID]);
+                setCurrentPage("tasks")
+            } else {
+                console.error(data.detail || "Failed to delete task");
+            }
+        } catch (error) {
+            console.error("Error deleting task: ", error);
+        }
+    };
     return (
         <div className={file.vtContainer}>
 
@@ -24,7 +50,10 @@ function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID
                 <button className={file.vtEditBtn} onClick={()=>{setCurrentPage("editTask")
                     setTaskID(viewTaskID)
                 }}>Edit</button >
-                <button className={file.vtDeleteBtn}>Delete</button>
+                <button className={file.vtDeleteBtn} onClick={(e)=>{
+                    e.preventDefault();
+                    deleteTask();
+                }}>Delete</button>
             </div>
         </div>
         </div>

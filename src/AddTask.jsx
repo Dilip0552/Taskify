@@ -71,6 +71,11 @@ const [openS,setOpenS]=useState(false)
     if (reason === 'clickaway') return;
     setOpenS(false); //
   };
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const minDate = `${yyyy}-${mm}-${dd}`;
 
   return (
     <div className={file.atContainer}>
@@ -92,7 +97,7 @@ const [openS,setOpenS]=useState(false)
 
         <div className={file.atDueDate}>
           <span className={file.atDueDateSpan}>Due Date</span>
-          <input type="date" name="due_date" value={taskDetails.due_date} onChange={handleChange} />
+          <input type="date" name="due_date" value={taskDetails.due_date} onChange={handleChange} min={minDate}/>
         </div>
 
         <div className={file.atPriority}>

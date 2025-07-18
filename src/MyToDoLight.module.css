@@ -1245,13 +1245,27 @@
 
 
 /* ViewTask */
+.vtContainer{
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.vtMain{
+    overflow-y: auto;
+    height:85vh;
+    width:100%;
+    max-width: 600px;
+
+}
 .vtTop{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content:space-around;
     position: relative;
-    width:100%
+    width:100%;
     
 }
 .vtTop img{
@@ -1267,7 +1281,9 @@
     font-size: 32px;
     font-weight: 600;
     border:none;
-    width:100%
+    width:100%;
+    transition:color 0.4s ease-in-out;
+
 }
 .vtTop input:focus{
     outline: none;
@@ -1286,19 +1302,23 @@
 .vtDescription span, .vtDueDate span{
     color:#7A8196;
     font-size: 22px;
-    font-weight: 600
+    font-weight: 600;
+    transition:all 0.4s ease-in-out;
+
 }
 .vtDescription p, .vtDueDate p{
     color:#1C1C21;
     font-size: 22px;
-    margin-top:5px
+    margin-top:5px;
+    transition:all 0.4s ease-in-out;
+
 }
 .vtMoreOptions{
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     width:100%;
-    height:100%;
+    /* height:100%; */
     margin-top: 25px;
 }
 .vtEditBtn{
@@ -1310,7 +1330,9 @@
     font-size: 20px;
     width:42%;
     height:45px;
-    max-width:250px
+    max-width:250px;
+    transition:all 0.4s ease-in-out;
+
 }
 .vtDeleteBtn{
     color:white;
@@ -1321,5 +1343,7 @@
     font-size: 20px;
     width:42%;
     height:45px;
-    max-width:250px
+    max-width:250px;
+    transition:all 0.4s ease-in-out;
+
 }

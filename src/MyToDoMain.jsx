@@ -45,7 +45,7 @@ function MyToDoMain() {
         PageComponent = <EditTask taskKey={taskID} setCurrentPage={setCurrentPage} />;
         break;
       case "viewTask":
-        PageComponent = <ViewTask taskID title={viewTaskDetails.title} description={viewTaskDetails.description} due_date={viewTaskDetails.due_date} priority={viewTaskDetails.priority} setCurrentPage={setCurrentPage} viewTaskID={viewTaskID}  setTaskID={setTaskID}/>;
+        PageComponent = <ViewTask  title={viewTaskDetails.title} description={viewTaskDetails.description} due_date={viewTaskDetails.due_date} priority={viewTaskDetails.priority} setCurrentPage={setCurrentPage} viewTaskID={viewTaskID}  setTaskID={setTaskID}/>;
         break;
       default:
         PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} />;

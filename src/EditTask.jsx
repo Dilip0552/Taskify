@@ -95,6 +95,11 @@ function EditTask({ setCurrentPage, taskKey }) {
     if (reason === 'clickaway') return;
     setOpenS(false); // 👋 Snackbar disappears
   };
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  const minDate = `${yyyy}-${mm}-${dd}`;
   return (
     <div className={file.etContainer}>
       <div className={file.etEditTask}>
@@ -115,7 +120,7 @@ function EditTask({ setCurrentPage, taskKey }) {
 
         <div className={file.etDueDate}>
           <span className={file.etDueDateSpan}>Due Date</span>
-          <input type="date" name="due_date" value={taskDetails.due_date} onChange={handleChange} />
+          <input type="date" name="due_date" value={taskDetails.due_date} onChange={handleChange} min={minDate}/>
         </div>
 
         <div className={file.etPriority}>

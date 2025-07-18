@@ -1253,9 +1253,19 @@
 
 
 /* ViewTask */
+.vtContainer{
+    width:100%;
+    height:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .vtMain{
     overflow-y: auto;
-    height:85vh
+    height:85vh;
+    width:100%;
+    max-width: 600px;
+
 }
 .vtTop{
     display: flex;
@@ -1281,7 +1291,7 @@
     font-weight: 600;
     border:none;
     width:100%;
-    transition:all 0.4s ease-in-out;
+    transition:color 0.4s ease-in-out;
 
 }
 .vtTop input:focus{
