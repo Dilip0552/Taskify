@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Snackbar from '@mui/material/Snackbar';
-
+import leftArrow from "./assets/left-arrow.png"
 function EditTask({ setCurrentPage, taskKey }) {
   const { theme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
@@ -104,7 +104,7 @@ function EditTask({ setCurrentPage, taskKey }) {
     <div className={file.etContainer}>
       <div className={file.etEditTask}>
         <div className={file.etHeader}>
-          <img src="src/assets/left-arrow.png" alt="Back" onClick={() => setCurrentPage("tasks")} />
+          <img src={leftArrow} alt="Back" onClick={() => setCurrentPage("tasks")} />
           <span className={file.etHeadingSpan}>Edit Task</span>
         </div>
 

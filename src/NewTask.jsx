@@ -1,6 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-
+import editing from "./assets/editing.png"
+import editingWhite from "./assets/editing-white.png"
+import deleteicon from "./assets/delete.png"
 function NewTask({ taskID, userID, theme, title, status, body, date, priority, mode, setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID}) {
     const queryClient = useQueryClient();
     const token = localStorage.getItem("token");
@@ -78,7 +80,7 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
                 <div className={theme.taskBottom}>
                     <div className={theme.moreOptions}>
                         <img
-                            src={mode === "dark" ? "src/assets/editing-white.png" : "src/assets/editing.png"}
+                            src={mode === "dark" ? editingWhite : editing}
                             alt="edit"
                             onClick={() => {
                                 setTaskID(taskID);
@@ -86,7 +88,7 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
                             }}
                         />
                         <img
-                            src="src/assets/delete.png"
+                            src={deleteicon}
                             alt="delete"
                             onClick={(e) => {
                                 e.preventDefault();

@@ -8,7 +8,7 @@ import { ThemeContext } from "./ThemeContext";
 import EditTask from "./EditTask";
 import ViewTask from "./ViewTask";
 import { useNavigate } from "react-router-dom";
-
+import accountability from "./assets/left-arrow.png"
 function MyToDoMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
@@ -77,7 +77,7 @@ function MyToDoMain() {
     <div className={file.mytodoMainDiv}>
       <div className={file.topBar}>
         <div className={file.icoDiv}>
-          <img src="src/assets/accountability.png" alt="icon" />
+          <img src={accountability} alt="icon" />
           Taskify
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
