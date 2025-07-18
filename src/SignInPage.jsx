@@ -3,6 +3,10 @@ import { useState } from 'react';
 import { useMutation } from "@tanstack/react-query";
 import PopUp from "./PopUp";
 import accountability from "./assets/accountability.png"
+import searchGoogle from "./assets/search (2).png"
+import remove from "./assets/remove.png"
+import view from "./assets/view.png"
+import hide from "./assets/hide.png"
 function SignInPage({ setEntryPoint }) {
     const navigate = useNavigate();
     const [popStatus, setPopStatus] = useState("close");
@@ -76,7 +80,7 @@ function SignInPage({ setEntryPoint }) {
             <div id="bottom-bg">
                 <div>Log in to your account</div>
                 <div id="s-with-g">
-                    <img src="/src/assets/search (2).png" alt="google icon" />
+                    <img src={searchGoogle} alt="google icon" />
                     <span>Sign in with Google</span>
                 </div>
                 <div id="hr-or">or</div>
@@ -84,7 +88,7 @@ function SignInPage({ setEntryPoint }) {
                     <div>Email</div>
                     <div className="wrapper">
                         <input type="email" id="login-email" required className="m-inp" name="email" value={siData.email} onChange={handleChange} />
-                        <img src="src/assets/remove.png" id="email-r" className="input-icon" alt="icon" onClick={()=>{
+                        <img src={remove} id="email-r" className="input-icon" alt="icon" onClick={()=>{
                             setSIData({ ...siData, ["email"]: "" });
                         }}/>
                     </div>
@@ -103,7 +107,7 @@ function SignInPage({ setEntryPoint }) {
                         />
 
                         <img
-                            src={showPassword ? "src/assets/view.png" : "src/assets/hide.png"}
+                            src={showPassword ? view : hide}
                             id="password-v"
                             className="input-icon"
                             alt="icon"
