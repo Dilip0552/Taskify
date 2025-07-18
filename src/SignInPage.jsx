@@ -25,7 +25,7 @@ function SignInPage({ setEntryPoint }) {
   form.append("username", siData.email); 
   form.append("password", siData.password);
 
-  const res = await fetch("https://taskify-la02.onrender.com//api/token", {
+  const res = await fetch("https://taskify-la02.onrender.com/api/token", {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
