@@ -2,7 +2,7 @@ import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import { useMutation } from "@tanstack/react-query";
 import PopUp from "./PopUp";
-
+import accountability from "./assets/accountability.png"
 function SignInPage({ setEntryPoint }) {
     const navigate = useNavigate();
     const [popStatus, setPopStatus] = useState("close");
@@ -70,7 +70,7 @@ function SignInPage({ setEntryPoint }) {
 
     return (
         <div id="outer-most">
-            <div id="cp"><img src="./src/assets/accountability.png" alt="logo" /></div>
+            <div id="cp"><img src={accountability} alt="logo" /></div>
             <div id="top-bg"></div>
 
             <div id="bottom-bg">
