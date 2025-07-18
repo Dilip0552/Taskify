@@ -70,13 +70,13 @@ function SignInPage({ setEntryPoint }) {
 
     return (
         <div id="outer-most">
-            <div id="cp"><img src="src/assets/accountability.png" alt="logo" /></div>
+            <div id="cp"><img src="/src/assets/accountability.png" alt="logo" /></div>
             <div id="top-bg"></div>
 
             <div id="bottom-bg">
                 <div>Log in to your account</div>
                 <div id="s-with-g">
-                    <img src="src/assets/search (2).png" alt="google icon" />
+                    <img src="/src/assets/search (2).png" alt="google icon" />
                     <span>Sign in with Google</span>
                 </div>
                 <div id="hr-or">or</div>
