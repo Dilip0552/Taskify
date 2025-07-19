@@ -134,7 +134,7 @@
 }
 
 .tasksBar {
-    height: 65%;
+    height: 62%;
     overflow-y: auto;
     scrollbar-width: none;
     transition:  all 0.4s ease;
