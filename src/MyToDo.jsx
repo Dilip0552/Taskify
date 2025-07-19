@@ -5,7 +5,7 @@ import NewTask from "./NewTask";
 import { lazy, useState, Suspense, useContext, useEffect } from 'react';
 import { ThemeContext } from "./ThemeContext";
 import { useQuery } from "@tanstack/react-query";
-function MyToDo({ setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID }) {
+function MyToDo({ setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID,setSnackMessage,openS,setOpenS }) {
   const navigate = useNavigate();
   const Filter = lazy(() => import("./Filter"));
   const [filterStatus, setFilterStatus] = useState("close");
@@ -138,6 +138,9 @@ function MyToDo({ setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID }
                     setTaskID={setTaskID}
                     setViewTaskDetails={setViewTaskDetails}
                     setViewTaskID={setViewTaskID}
+                    setSnackMessage={setSnackMessage} 
+                    openS={openS} 
+                    setOpenS={setOpenS}
                   />
                 ))
               )}

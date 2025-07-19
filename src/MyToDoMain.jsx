@@ -10,10 +10,17 @@ import ViewTask from "./ViewTask";
 import { useNavigate } from "react-router-dom";
 import accountability from "./assets/accountability.png"
 import logout from "./assets/logout.png"
+import Snackbar from '@mui/material/Snackbar';
+import leftArrow from "./assets/left-arrow.png"
 function MyToDoMain() {
   const { theme, toggleTheme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
-
+  const [snackMessage,setSnackMessage]=useState("")
+    const [openS,setOpenS]=useState(false)
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setOpenS(false); // 👋 Snackbar disappears
+  };
   const [currentPage, setCurrentPage] = useState("tasks");
   const [taskID, setTaskID] = useState("");
   const [viewTaskID, setViewTaskID] = useState("");
@@ -37,19 +44,19 @@ function MyToDoMain() {
     let PageComponent;
     switch (currentPage) {
       case "tasks":
-        PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} setViewTaskDetails={setViewTaskDetails} setViewTaskID={setViewTaskID}/>;
+        PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} setViewTaskDetails={setViewTaskDetails} setViewTaskID={setViewTaskID} setSnackMessage={setSnackMessage} openS={openS} setOpenS={setOpenS}/>;
         break;
       case "addTask":
-        PageComponent = <AddTask setCurrentPage={setCurrentPage} />;
+        PageComponent = <AddTask setCurrentPage={setCurrentPage} setSnackMessage={setSnackMessage} openS={openS} setOpenS={setOpenS}/>;
         break;
       case "editTask":
         if (taskID){
 
-          PageComponent = <EditTask taskKey={taskID} setCurrentPage={setCurrentPage} />;
+          PageComponent = <EditTask taskKey={taskID} setCurrentPage={setCurrentPage} setSnackMessage={setSnackMessage} openS={openS} setOpenS={setOpenS}/>;
         }
         break;
       case "viewTask":
-        PageComponent = <ViewTask  title={viewTaskDetails.title} description={viewTaskDetails.description} due_date={viewTaskDetails.due_date} priority={viewTaskDetails.priority} setCurrentPage={setCurrentPage} viewTaskID={viewTaskID}  setTaskID={setTaskID}/>;
+        PageComponent = <ViewTask  title={viewTaskDetails.title} description={viewTaskDetails.description} due_date={viewTaskDetails.due_date} priority={viewTaskDetails.priority} setCurrentPage={setCurrentPage} viewTaskID={viewTaskID}  setTaskID={setTaskID} setSnackMessage={setSnackMessage} openS={openS} setOpenS={setOpenS}/>;
         break;
       default:
         PageComponent = <MyToDo setCurrentPage={setCurrentPage} setTaskID={setTaskID} />;
@@ -95,7 +102,7 @@ function MyToDoMain() {
         <input type="checkbox" className="input" checked={theme === "dark"} onClick={toggleTheme}/>
         <span className="slider" />
       </label>
-          <img src={logout} alt="logout" style={{width:"30px",height:"30px",filter:theme==="dark"?"invert()":null}} onClick={handleLogout}/>
+          <img src={logout} alt="logout" style={{width:"27px",height:"27px",filter:theme==="dark"?"invert()":null}} onClick={handleLogout}/>
         </div>
 
       </div>
@@ -103,6 +110,13 @@ function MyToDoMain() {
       <div className={file.mainContent}>
         <AnimatePresence mode="wait">{renderPage()}</AnimatePresence>
       </div>
+      <Snackbar
+        open={openS}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message={snackMessage}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
     </div>
   );
 }

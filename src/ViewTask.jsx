@@ -4,7 +4,7 @@ import darkstyles from "./MyToDoDark.module.css"
 import lightstyles from "./MyToDoLight.module.css"
 import { useQueryClient } from '@tanstack/react-query';
 import leftArrow from "./assets/left-arrow.png"
-function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID, setTaskID}){
+function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID, setTaskID,setSnackMessage,setOpenS}){
     const {theme,setTheme}=useContext(ThemeContext)
     const file = theme === "dark" ? darkstyles : lightstyles;
     const queryClient=useQueryClient()
@@ -22,7 +22,8 @@ function ViewTask({title,description,priority,due_date,setCurrentPage,viewTaskID
 
             const data = await res.json();
             if (res.ok) {
-                alert("Task deleted Successfully");
+                setSnackMessage("Task deketed Successfully");
+                setOpenS(true)
                 queryClient.invalidateQueries(["tasks", userID]);
                 setCurrentPage("tasks")
             } else {

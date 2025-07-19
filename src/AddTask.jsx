@@ -5,7 +5,7 @@ import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useMutation } from "@tanstack/react-query";
 import Snackbar from '@mui/material/Snackbar';
 import leftArrow from "./assets/left-arrow.png"
-function AddTask({ setCurrentPage, addTaskStatus, setAddTaskStatus }) {
+function AddTask({ setSnackMessage, openS,setOpenS,setCurrentPage, addTaskStatus, setAddTaskStatus }) {
   const { theme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
 
@@ -52,8 +52,9 @@ function AddTask({ setCurrentPage, addTaskStatus, setAddTaskStatus }) {
     mutationFn: addTask,
     onSuccess: (data) => {
       console.log("✅", data.message);
+      setSnackMessage(data.message)
       setOpenS(true)
-    //   setCurrentPage("tasks");
+      setCurrentPage("tasks");
     }
   });
 
@@ -64,12 +65,6 @@ function AddTask({ setCurrentPage, addTaskStatus, setAddTaskStatus }) {
       return;
     }
     mutation.mutate();
-  };
-const [openS,setOpenS]=useState(false)
-  
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return;
-    setOpenS(false); //
   };
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -141,13 +136,7 @@ const [openS,setOpenS]=useState(false)
         >
           Add Task
         </button>
-        <Snackbar
-            open={openS}
-            autoHideDuration={3000}
-            onClose={handleClose}
-            message="Task added Successfully!"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        />
+       
       </div>
     </div>
   );

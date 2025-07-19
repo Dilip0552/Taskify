@@ -3,7 +3,7 @@ import { useState } from 'react';
 import editing from "./assets/editing.png"
 import editingWhite from "./assets/editing-white.png"
 import deleteicon from "./assets/delete.png"
-function NewTask({ taskID, userID, theme, title, status, body, date, priority, mode, setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID}) {
+function NewTask({ taskID, userID, theme, title, status, body, date, priority, mode, setCurrentPage, setTaskID ,setViewTaskDetails, setViewTaskID ,setSnackMessage,setOpenS}) {
     const queryClient = useQueryClient();
     const token = localStorage.getItem("token");
 
@@ -18,8 +18,10 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
 
             const data = await res.json();
             if (res.ok) {
-                alert("Task deleted Successfully");
+                setSnackMessage("Task deketed Successfully");
+                setOpenS(true)
                 queryClient.invalidateQueries(["tasks", userID]);
+                setCurrentPage("tasks")
             } else {
                 console.error(data.detail || "Failed to delete task");
             }

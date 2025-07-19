@@ -6,12 +6,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Snackbar from '@mui/material/Snackbar';
 import leftArrow from "./assets/left-arrow.png"
-function EditTask({ setCurrentPage, taskKey }) {
+import Loader from "./Loader";
+function EditTask({ openS,setOpenS, setSnackMessage, setCurrentPage, taskKey }) {
   const { theme } = useContext(ThemeContext);
   const file = theme === "dark" ? darkstyles : lightstyles;
   const user_id = localStorage.getItem('user_id');
   const token = localStorage.getItem('token');
-  const [openS,setOpenS]=useState(false)
+  // const [openS,setOpenS]=useState(false)
     const dueDateRef = useRef(null);
   const [taskDetails, setTaskDetails] = useState({
     title: "",
@@ -75,10 +76,11 @@ function EditTask({ setCurrentPage, taskKey }) {
 
   const mutation = useMutation({
     mutationFn: updateTask,
-    onSuccess: () => {
+    onSuccess:  () => {
       console.log("Task updated successfully");
-      setOpenS(true)
-      // setCurrentPage("tasks");
+      setSnackMessage("Task updated successfully")
+      setOpenS(true);
+      setCurrentPage("tasks");
     }
   });
 
@@ -91,11 +93,8 @@ function EditTask({ setCurrentPage, taskKey }) {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') return;
-    setOpenS(false); // 👋 Snackbar disappears
-  };
+  if (isLoading) return <Loader/>;
+  
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, "0");
@@ -157,13 +156,7 @@ function EditTask({ setCurrentPage, taskKey }) {
           </div>
         </div>
 
-        <Snackbar
-        open={openS}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message="Task updated Successfully!"
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      />
+        
         <button className={file.etEditTaskBtn} onClick={(e) => {
           e.preventDefault();
           handleUpdateTask();
