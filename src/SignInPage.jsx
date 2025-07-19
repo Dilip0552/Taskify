@@ -37,7 +37,7 @@ function SignInPage({ setEntryPoint }) {
   });
 
   const data = await res.json();
-  console.log(data);
+//   console.log(data);
 
   if (!res.ok) {
     throw new Error(data.detail || "Login failed");

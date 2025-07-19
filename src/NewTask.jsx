@@ -1,4 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import editing from "./assets/editing.png"
 import editingWhite from "./assets/editing-white.png"
@@ -28,27 +28,43 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
         }
     };
 
-    const handleCheckBox = async (taskId, currentStatus) => {
-        try {
-            const res = await fetch(`https://taskify-la02.onrender.com/api/task/${taskId}/status`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
-                },
-                body: JSON.stringify({ status: !currentStatus }),
-            });
+    const mutation = useMutation({
+    mutationFn: async ({ taskId, newStatus }) => {
+        const res = await fetch(`https://taskify-la02.onrender.com/api/task/${taskId}/status`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ status: newStatus }),
+        });
+        if (!res.ok) throw new Error("Failed to update task status");
+        return res.json();
+    },
+    onMutate: async ({ taskId, newStatus }) => {
+        await queryClient.cancelQueries(["tasks", userID]);
 
-            if (!res.ok) throw new Error("Failed to update status");
+        const previousTasks = queryClient.getQueryData(["tasks", userID]);
 
-            queryClient.invalidateQueries(["tasks", userID]);
-        } catch (err) {
-            console.error("Error updating task status:", err);
-        }
-    };
+        queryClient.setQueryData(["tasks", userID], (old) =>
+            old?.map(task =>
+                task._id === taskId ? { ...task, status: newStatus } : task
+            )
+        );
+
+        return { previousTasks };
+    },
+    onError: (err, variables, context) => {
+        // rollback to previous state on error
+        queryClient.setQueryData(["tasks", userID], context.previousTasks);
+        alert("Failed to update task status");
+    },
+    onSettled: () => {
+        queryClient.invalidateQueries(["tasks", userID]);
+    }
+});
     const handleClickDiv=(e)=>{
         if (e.target.tagName!=="IMG" && e.target.tagName!=="INPUT" && e.target.id!=="exclude"){
-            // console.log("Clicked the div",e.target.tagName)
             setViewTaskDetails({
                 title:title,
                 description:body,
@@ -65,7 +81,7 @@ function NewTask({ taskID, userID, theme, title, status, body, date, priority, m
                 <input
                     type="checkbox"
                     checked={status}
-                    onChange={() => handleCheckBox(taskID, status)}
+                   onChange={() => mutation.mutate({ taskId: taskID, newStatus: !status })}
                 />
                 <span className={theme.checkmark} id="exclude"></span>
             </label>

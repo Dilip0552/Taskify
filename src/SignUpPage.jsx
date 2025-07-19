@@ -7,6 +7,7 @@ import searchGoogle from "./assets/search (2).png"
 import remove from "./assets/remove.png"
 import view from "./assets/view.png"
 import hide from "./assets/hide.png"
+import Loader from './Loader';
 function SignUpPage({ setEntryPoint }) {
     const navigate = useNavigate();
     const [suData, setSUData] = useState({
@@ -69,11 +70,13 @@ function SignUpPage({ setEntryPoint }) {
     const mutation = useMutation({
         mutationFn: registerUser,
         onSuccess: (data) => {
+            setLoading(false);
             setPopupMsg(data.message);
             setPopStatus("open");
             setErrors(false);
         },
         onError: (err) => {
+            setLoading(false);
             setPopupMsg(err.message || "Something went wrong");
             setPopStatus("open");
             setErrors(true);
@@ -86,11 +89,13 @@ function SignUpPage({ setEntryPoint }) {
             setPopStatus("open");
             return;
         }
+        setLoading(true);
 
         mutation.mutate();
     };
     const [showPassword, setShowPassword] = useState(false);
     const [showCnfPassword, setShowCnfPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
 
     return (
@@ -205,6 +210,7 @@ function SignUpPage({ setEntryPoint }) {
                     }}>Log in</Link>
                 </div>
             </div>
+            {loading && <div style={{width:"100vw", height:"100vh",position:"absolute",top:"0",right:"0",display:"flex",alignItems:"center",zIndex:"999",justifyContent:"center",backgroundColor:"rgba(119, 119, 119, 0.5)"}}><Loader/></div>}
         </div>
     );
 }
