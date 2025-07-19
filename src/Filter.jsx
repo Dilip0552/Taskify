@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import remove from "./assets/remove.png"
 function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
   const [searchText, setSearchText] = useState("");
@@ -37,6 +37,8 @@ function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
     onApplyFilters(emptyFilters);
     setFilterStatus("close");
   };
+  const fromRef = useRef(null);
+  const toRef = useRef(null);
 
   return (
     <div className={theme.filterPop}>
@@ -108,14 +110,40 @@ function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
           <p>Due Date</p>
           <div className={theme.fdDiv}>
             <input
-              type="date"
+              ref={fromRef}
+              type={fromDate ? "date" : "text"}
+              placeholder="From date"
               value={fromDate}
+              onFocus={(e) => {
+                e.target.type = "date";
+                // trigger the calendar immediately
+                setTimeout(() => {
+                  fromRef.current?.showPicker?.(); // modern way
+                  fromRef.current?.click(); // fallback
+                }, 0);
+              }}
+              onBlur={(e) => {
+                if (!e.target.value) e.target.type = "text";
+              }}
               onChange={(e) => setFromDate(e.target.value)}
             />
+
             -
             <input
-              type="date"
+              ref={toRef}
+              type={toDate ? "date" : "text"}
+              placeholder="To date"
               value={toDate}
+              onFocus={(e) => {
+                e.target.type = "date";
+                setTimeout(() => {
+                  toRef.current?.showPicker?.();
+                  toRef.current?.click();
+                }, 0);
+              }}
+              onBlur={(e) => {
+                if (!e.target.value) e.target.type = "text";
+              }}
               onChange={(e) => setToDate(e.target.value)}
             />
           </div>
