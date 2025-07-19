@@ -84,12 +84,14 @@ function SignInPage({ setEntryPoint }) {
             <div id="top-bg"></div>
 
             <div id="bottom-bg">
-                <div>Log in to your account</div>
-                <div id="s-with-g">
+                <div style={{marginTop:"20px"}}>Log in to your account</div>
+                {/* <div id="s-with-g"  onClick={()=>{
+                    navigate("/sign-in-with-google")
+                }}>
                     <img src={searchGoogle} alt="google icon" />
                     <span>Sign in with Google</span>
                 </div>
-                <div id="hr-or">or</div>
+                <div id="hr-or">or</div> */}
                 <div id="login-email-d" className="email-password">
                     <div>Email</div>
                     <div className="wrapper">

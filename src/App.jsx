@@ -14,6 +14,8 @@ function App(){
                 <Route path="/login" element={<SignInPage/>}></Route>
                 <Route path="/create-account" element={<SignUpPage/>}></Route>
                 <Route path="/forgot-password" element={<div>Coming soon...</div>}></Route>
+                <Route path="/sign-in-with-google" element={<div>Coming soon...</div>}></Route>
+                <Route path="/sign-up-with-google" element={<div>Coming soon...</div>}></Route>
                 <Route path="/mytasks" element={<Suspense fallback={<div style={{display:"flex", flexDirection:"column",alignItems:"center",justifyContent:"center",backgroundImage:"linear-gradient(to bottom,#1E152C, #0E1427)",height:"100vh"}}><Loader/>
         </div>}><MyToDoMain/></Suspense>}></Route>
                 {/* <Route path="/filter-tasks" element={<Suspense fallback={<div style={{display:"flex", flexDirection:"column",alignItems:"center",justifyContent:"center"}}>Loading...</div>}><FilterPage/></Suspense>}></Route> */}
