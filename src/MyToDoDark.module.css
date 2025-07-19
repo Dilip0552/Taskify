@@ -71,7 +71,7 @@
     justify-content: center;
     width:fit-content;
     color:whitesmoke;
-    font-size: 35px;
+    font-size: 2rem;
     font-weight: 600;
     transition:  all 0.4s ease;
 
@@ -79,7 +79,7 @@
 
 }
 .icoDiv img{
-    width:60px;
+    width:3.5rem;
     height:auto;
     margin-right:8px
 
@@ -106,7 +106,7 @@
 }
 
 .midBar{
-    font-size: 38px;
+    font-size: 1.8rem;
     color:white;
     /* padding:15px 0px 15px 0px; */
     font-weight: 600;
@@ -124,7 +124,7 @@
     background-color: rgb(45, 140, 255,0.9);
     border-radius: 8px;
     border:1px solid #0073ff;
-    font-size: 20px;
+    font-size: 1.1rem;
     padding:12px 0 12px 0;
     margin-top:10px;
     color:white;
@@ -413,9 +413,11 @@
     align-items: center;
     justify-content: left;
     padding:22px 3vw 12px 3vw;
-    color:white
+    color:white;
     /* padding-left:5vw; */
     /* padding-right:5vw; */
+    z-index:999
+
 
 
 }
@@ -686,7 +688,8 @@
     flex-direction: column;
     align-items: left;
     justify-content: top;
-    padding:30px 10px 30px 10px;
+    /* padding-top:10px; */
+    /* padding:30px 10px 30px 10px; */
     transition:all 0.4s ease-in-out;
 
 
@@ -701,8 +704,8 @@
 
 }
 .atHeader img{
-    width:30px;
-    height:30px;
+    width:27px;
+    height:27px;
     position: absolute;
     top:0px;
     left:0px;
@@ -711,7 +714,7 @@
 }
 .atHeadingSpan{
     color:rgb(255, 255, 255);
-    font-size: 34px;
+    font-size: 1.8rem;
     font-weight: 600;
     transition:all 0.4s ease-in-out;
 
@@ -844,7 +847,7 @@
 
 .atPriority{
     margin-top: 22px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 
 .atPriority p{
@@ -885,10 +888,10 @@
     margin:10px;
     border-radius: 8px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.2rem;
     /* width:80%; */
     /* width:180px; */
-    height:45px;
+    height:40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -903,10 +906,10 @@
     margin:10px;
     border-radius: 8px;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 1.2rem;
     /* width:80%; */
     /* width:180px; */
-    height:45px;
+    height:40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -932,7 +935,7 @@
     border: 1px solid #0073ff;
     font-size: 20px;
     padding: 12px 0;
-    margin-top: 10px;
+    /* margin-top: 10px; */
     color: white;
     font-weight: 500;
     cursor: pointer;
