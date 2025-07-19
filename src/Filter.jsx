@@ -6,7 +6,8 @@ function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
   const [status, setStatus] = useState(""); // "completed" | "pending"
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
-
+  const fromRef = useRef(null);
+  const toRef = useRef(null);
   const handleApply = () => {
     const filters = {
       searchText,
@@ -37,8 +38,7 @@ function Filter({ theme, filterStatus, setFilterStatus, onApplyFilters }) {
     onApplyFilters(emptyFilters);
     setFilterStatus("close");
   };
-  const fromRef = useRef(null);
-  const toRef = useRef(null);
+  
 
   return (
     <div className={theme.filterPop}>

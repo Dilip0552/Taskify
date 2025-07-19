@@ -12,6 +12,7 @@ function EditTask({ setCurrentPage, taskKey }) {
   const user_id = localStorage.getItem('user_id');
   const token = localStorage.getItem('token');
   const [openS,setOpenS]=useState(false)
+    const dueDateRef = useRef(null);
   const [taskDetails, setTaskDetails] = useState({
     title: "",
     description: "",
@@ -100,7 +101,7 @@ function EditTask({ setCurrentPage, taskKey }) {
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   const minDate = `${yyyy}-${mm}-${dd}`;
-  const dueDateRef = useRef(null);
+
   return (
     <div className={file.etContainer}>
       <div className={file.etEditTask}>
