@@ -1,7 +1,7 @@
 import { ThemeContext } from "./ThemeContext";
 import darkstyles from "./MyToDoDark.module.css";
 import lightstyles from "./MyToDoLight.module.css";
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import Snackbar from '@mui/material/Snackbar';
@@ -100,6 +100,7 @@ function EditTask({ setCurrentPage, taskKey }) {
   const mm = String(today.getMonth() + 1).padStart(2, "0");
   const dd = String(today.getDate()).padStart(2, "0");
   const minDate = `${yyyy}-${mm}-${dd}`;
+  const dueDateRef = useRef(null);
   return (
     <div className={file.etContainer}>
       <div className={file.etEditTask}>
@@ -120,7 +121,25 @@ function EditTask({ setCurrentPage, taskKey }) {
 
         <div className={file.etDueDate}>
           <span className={file.etDueDateSpan}>Due Date</span>
-          <input type="date" name="due_date" value={taskDetails.due_date} onChange={handleChange} min={minDate}/>
+          <input
+            ref={dueDateRef}
+            type={taskDetails.due_date ? "date" : "text"}
+            name="due_date"
+            placeholder="Due date"
+            value={taskDetails.due_date}
+            min={minDate}
+            onFocus={(e) => {
+              e.target.type = "date";
+              setTimeout(() => {
+                dueDateRef.current?.showPicker?.(); // modern browser support
+                dueDateRef.current?.click();        // fallback
+              }, 0);
+            }}
+            onBlur={(e) => {
+              if (!e.target.value) e.target.type = "text";
+            }}
+            onChange={handleChange}
+          />
         </div>
 
         <div className={file.etPriority}>
